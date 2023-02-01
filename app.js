@@ -71,8 +71,10 @@ function onCanvasClick(){
 }
 
 function onDestroyClick(){
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    if (confirm("Are you sure you want to destroy?")){
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    }
 }
 
 function onEraserClick(){
