@@ -1,3 +1,5 @@
+const fontFamily = document.getElementById("font-family");
+const fontSize = document.getElementById("font-size");
 const saveBtn = document.getElementById("save");
 const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
@@ -12,10 +14,18 @@ const ctx = canvas.getContext("2d"); //context는 캔버스에 그림을 그리�
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 800;
 
+// let f = new FontFace('text', 'url(https://fonts.googleapis.com/css2?family=Gaegu:wght@300&display=swap" rel="stylesheet)');
+// f.load().then(function()
+// {
+//     ctx.font = 'bold 48px text';
+// });
+
 canvas.width = 800; 
 canvas.height = 800;
 ctx.lineWidth = lineWidth.value;
 ctx.lineCap = "round";
+ctx.font = `${fontSize.value}px ${fontFamily.value}`;
+
 let isPainting = false;
 let isFilling = false;
 
@@ -94,17 +104,6 @@ function onFileChange(event){
     }
 }
 
-function onDoubleClick(event){
-    const text = textInput.value;
-    if (text !=="") {
-        ctx.save();
-        ctx.lineWidth = 1;
-        ctx.font = "68px serif";
-        ctx.fillText(text, event.offsetX, event.offsetY);
-        ctx.restore();
-    }
-}
-
 function onSaveClick(){
     const url = canvas.toDataURL();
     const a = document.createElement("a");
@@ -113,6 +112,27 @@ function onSaveClick(){
     a.click();
 }
 
+function onFontSizeChange(event){
+    ctx.font = `${event.target.value}px ${fontFamily.value}`
+}
+
+function onFontFamilySelect(event){
+    ctx.font = `${event.target.value}px ${fontFamily.value}`
+}
+
+function onDoubleClick(event){
+    const text = textInput.value;
+    if (text !=="") {
+        ctx.save();
+        ctx.lineWidth = 1;
+        // ctx.font = "68px serif";
+        ctx.fillText(text, event.offsetX, event.offsetY);
+        ctx.restore();
+    }
+}
+
+
+fontSize.addEventListener("change", onFontSizeChange);
 canvas.addEventListener("dblclick", onDoubleClick);
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
@@ -127,3 +147,4 @@ destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
 saveBtn.addEventListener("click", onSaveClick);
+fontFamily.addEventListener("select", onFontFamilySelect);
